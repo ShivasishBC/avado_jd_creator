@@ -1,15 +1,15 @@
 import streamlit as st
 import openai
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import os
 
-def get_user_api_key():
-    return st.sidebar.text_input("Enter your OpenAI API Key")
+# def get_user_api_key():
+#     return st.sidebar.text_input("Enter your OpenAI API Key")
 
-def initialize_openai_client():
-    load_dotenv()
-    api_key = get_user_api_key()
-    openai.api_key = api_key
+# def initialize_openai_client():
+#     load_dotenv()
+#     api_key = get_user_api_key()
+#     openai.api_key = api_key
 
 def gpt_function(skills, experience, job_role):
     user_content = f"""
@@ -36,7 +36,11 @@ def gpt_function(skills, experience, job_role):
 
 def main():
     st.title("JD Creator")
-    initialize_openai_client()
+
+    key = st.text_input("Enter your key")
+    submit = st.button("Submit key")
+    if submit :
+        openai.api_key = key
 
     input_list = ["Specific Required Skills","Experience Level","Job Title"]
     skills = st.text_input(input_list[0])
