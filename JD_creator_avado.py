@@ -1,8 +1,14 @@
 import streamlit as st
 import openai
 
-def gpt_function(api_key, skills, experience, job_role):
+def get_openai_client(api_key, endpoint):
+    openai.api_type = 'azure'
     openai.api_key = api_key
+    openai.api_version = '2023-12-01-preview'
+    openai.api_base = endpoint
+    return openai
+
+def gpt_function(client, skills, experience, job_role):
     user_content = f"""
     Create a Job Description for 
     Required Skills: {skills}.
@@ -18,31 +24,31 @@ def gpt_function(api_key, skills, experience, job_role):
                                     """},
                      {"role": "user", "content": f"{user_content}"}]
 
-    response = openai.ChatCompletion.create(
+    response = client.ChatCompletion.create(
         messages=conversation,
-        model="gpt-3.5-turbo",
+        engine="gpt-35-turbo",
     )
-    text_response = response.choices[0].message["content"]
+    text_response = response.choices[0].message.content
+
     return text_response
 
 def main():
     st.title("JD Creator")
 
-    st.sidebar.title("OpenAI API Key")
-    key = st.sidebar.text_input("Enter your key", type="password")
-    submit = st.sidebar.button("Submit key")
-    if submit:
-        st.session_state['api_key'] = key
+    st.sidebar.title("Azure OpenAI API Key and Endpoint")
+    openai_api_key = st.sidebar.text_input("Enter your Azure OpenAI API Key", type="password")
+    openai_endpoint = st.sidebar.text_input("Enter your Azure OpenAI Endpoint")
+    client = get_openai_client(openai_api_key, openai_endpoint)
 
     input_list = ["Specific Required Skills","Experience Level","Job Title"]
     skills = st.text_input(input_list[0])
     experience = st.text_input(input_list[1])
     job_role = st.text_input(input_list[2])
 
-    if skills and experience and job_role and 'api_key' in st.session_state:
+    if skills and experience and job_role and openai_api_key and openai_endpoint:
         if st.button("Submit"):
             with st.spinner("Let the magic happen ...."):
-                output = gpt_function(st.session_state['api_key'], skills, experience, job_role)
+                output = gpt_function(client, skills, experience, job_role)
                 st.write(output)
 
 if __name__ == "__main__":
