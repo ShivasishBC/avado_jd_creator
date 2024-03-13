@@ -37,7 +37,7 @@ def main():
 
     st.sidebar.title("Azure OpenAI API Key and Endpoint")
     openai_api_key = st.sidebar.text_input("Enter your Azure OpenAI API Key", type="password")
-    openai_endpoint = st.sidebar.text_input("Enter your Azure OpenAI Endpoint")
+    openai_endpoint = 'https://bc-api-management-uksouth.azure-api.net'
     client = get_openai_client(openai_api_key, openai_endpoint)
 
     input_list = ["Specific Required Skills","Experience Level","Job Title"]
