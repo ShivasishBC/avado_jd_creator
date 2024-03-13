@@ -1,15 +1,5 @@
 import streamlit as st
 import openai
-# from dotenv import load_dotenv
-import os
-
-# def get_user_api_key():
-#     return st.sidebar.text_input("Enter your OpenAI API Key")
-
-# def initialize_openai_client():
-#     load_dotenv()
-#     api_key = get_user_api_key()
-#     openai.api_key = api_key
 
 def gpt_function(skills, experience, job_role):
     user_content = f"""
@@ -27,7 +17,7 @@ def gpt_function(skills, experience, job_role):
                                     """},
                      {"role": "user", "content": f"{user_content}"}]
 
-    response = openai.ChatCompletion.create(
+    response = openai.OpenAI(api_key=st.session_state['api_key']).ChatCompletion.create(
         messages=conversation,
         model="gpt-3.5-turbo",
     )
@@ -37,17 +27,18 @@ def gpt_function(skills, experience, job_role):
 def main():
     st.title("JD Creator")
 
-    key = st.text_input("Enter your key")
-    submit = st.button("Submit key")
-    if submit :
-        openai.api_key = key
+    st.sidebar.title("OpenAI API Key")
+    key = st.sidebar.text_input("Enter your key", type="password")
+    submit = st.sidebar.button("Submit key")
+    if submit:
+        st.session_state['api_key'] = key
 
     input_list = ["Specific Required Skills","Experience Level","Job Title"]
     skills = st.text_input(input_list[0])
     experience = st.text_input(input_list[1])
     job_role = st.text_input(input_list[2])
 
-    if skills and experience and job_role:
+    if skills and experience and job_role and 'api_key' in st.session_state:
         if st.button("Submit"):
             with st.spinner("Let the magic happen ...."):
                 output = gpt_function(skills, experience, job_role)
