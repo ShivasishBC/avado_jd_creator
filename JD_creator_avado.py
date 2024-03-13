@@ -1,7 +1,8 @@
 import streamlit as st
 import openai
 
-def gpt_function(skills, experience, job_role):
+def gpt_function(api_key, skills, experience, job_role):
+    openai.api_key = api_key
     user_content = f"""
     Create a Job Description for 
     Required Skills: {skills}.
@@ -17,7 +18,7 @@ def gpt_function(skills, experience, job_role):
                                     """},
                      {"role": "user", "content": f"{user_content}"}]
 
-    response = openai.OpenAI(api_key=st.session_state['api_key']).ChatCompletion.create(
+    response = openai.ChatCompletion.create(
         messages=conversation,
         model="gpt-3.5-turbo",
     )
@@ -41,7 +42,7 @@ def main():
     if skills and experience and job_role and 'api_key' in st.session_state:
         if st.button("Submit"):
             with st.spinner("Let the magic happen ...."):
-                output = gpt_function(skills, experience, job_role)
+                output = gpt_function(st.session_state['api_key'], skills, experience, job_role)
                 st.write(output)
 
 if __name__ == "__main__":
