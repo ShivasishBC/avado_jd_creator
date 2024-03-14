@@ -45,7 +45,7 @@ def main():
     openai_endpoint = 'https://bc-api-management-uksouth.azure-api.net'
     client = get_openai_client(openai_api_key,openai_endpoint)
 
-    input_list = ["Any Specific Required Skills","Experience Level","Job Title"]
+    input_list = ["Any Specific Required Skills(Optional)","Experience Level","Job Title"]
 
     job_role = st.text_input(input_list[2])
     experience = st.text_input(input_list[1])
