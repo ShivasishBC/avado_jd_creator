@@ -27,6 +27,7 @@ def gpt_function(client, skills, experience, job_role):
     response = client.ChatCompletion.create(
         messages=conversation,
         engine="gpt-35-turbo",
+        temperature=0
     )
     text_response = response.choices[0].message.content
 
