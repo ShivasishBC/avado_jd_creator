@@ -17,10 +17,16 @@ def gpt_function(client, skills, experience, job_role):
 """
 
     conversation = [{"role": "system", "content": """You are a Job Description creator bot,
-                                    you have to only give well formatted Job Description for mentioned job title , experience level and required skills (if any).
-                                    - Divide your answer in sections like Job title ,Experience level ,Role summary,Responsibilities ,Success metrics ,Skills required and Recommended qualifications 
+                                    you have to only give well formatted Job Description for mentioned Job Title [Job role] , Experience Level[Experience] and required skills (if any) in british english.
+                                    Divide your answer in proper formatted sections and subheadings including  Job title and Experience level followed by : 
+                     
+                                   1. ### Role summary,
+                                   2. ### Responsibilities ,
+                                   3. ### Success metrics ,
+                                   4. ### Skills required, 
+                                   5. ### Recommended qualifications 
                                     - You may  add an extra catch up line for the interviewer to get his/her interest in the Technology and Roles that <Company Name> is going to offer.
-                                    - if adding a catch up line then give few spaces and dont mention any title for it. just give the line
+                                    - if adding a catch up  line then give few spaces and dont mention any title for it. just give the line
                                     """},
                      {"role": "user", "content": f"{user_content}"}]
 
@@ -36,17 +42,16 @@ def gpt_function(client, skills, experience, job_role):
 def main():
     st.title(" Job Description Drafter")
     description = """
-    #### About the App
-    ###### This app generates a well-formatted job description based on the provided job title, experience level, and required skills (optional).
+    ###### Create a job description for the role you are hiring.
     """
     st.markdown(description , unsafe_allow_html=True)
 
-    st.sidebar.title("Azure OpenAI API Key")
+    st.sidebar.title("Azure OpenAI API Key and Endpoint")
     openai_api_key = st.sidebar.text_input("Enter your Azure OpenAI API Key", type="password")
     openai_endpoint = 'https://bc-api-management-uksouth.azure-api.net'
     client = get_openai_client(openai_api_key,openai_endpoint)
 
-    input_list = ["Any Specific Required Skills(Optional)","Experience Level","Job Title"]
+    input_list = ["Any Specific Required Skills","Experience Level","Job Title"]
 
     job_role = st.text_input(input_list[2])
     experience = st.text_input(input_list[1])
@@ -58,7 +63,7 @@ def main():
 
     if experience and job_role and openai_api_key and openai_endpoint:
         if st.button("Submit"):
-            with st.spinner("Let the magic happen ...."):
+            with st.spinner("Saving you time ...."):
                 output = gpt_function(client, skills, experience, job_role)
                 st.markdown(output,unsafe_allow_html=True)
 
