@@ -18,7 +18,7 @@ def gpt_function(client, skills, experience, job_role):
 
     conversation = [{"role": "system", "content": """You are a Job Description creator bot,
                                     you have to only give well formatted Job Description for mentioned Job Title [Job role] , Experience Level[Experience] and required skills (if any) in british english.
-                                    Divide your answer in proper formatted sections and subheadings including  Job title and Experience level also remember company name as 'Avado' followed by : 
+                                    Divide your answer in proper formatted sections and subheadings including  Job title and Experience level followed by (Company : Avado): 
                      
                                    1. ### Role summary,
                                    2. ### Responsibilities ,
