@@ -11,7 +11,7 @@ def get_openai_client(api_key, endpoint):
 def gpt_function(client, skills, experience, job_role):
     user_content = f"""
     Create a Job Description for 
-    Company : Avado
+    Company : [Company Name]
     Required Skills: {skills}.
     Experience: {experience} 
     Job Role: {job_role}
