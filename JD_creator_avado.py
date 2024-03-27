@@ -11,14 +11,17 @@ def get_openai_client(api_key, endpoint):
 def gpt_function(client, skills, experience, job_role):
     user_content = f"""
     Create a Job Description for 
+    Company : Avado
     Required Skills: {skills}.
     Experience: {experience} 
     Job Role: {job_role}
+
+
 """
 
     conversation = [{"role": "system", "content": """You are a Job Description creator bot,
                                     you have to only give well formatted Job Description for mentioned Job Title [Job role] , Experience Level[Experience] and required skills (if any) in british english.
-                                    Divide your answer in proper formatted sections and subheadings including Company : Avado , Job title and Experience level followed: 
+                                    Divide your answer in proper formatted sections and subheadings including Job title and Experience level followed: 
                      
                                    1. ### Role summary,
                                    2. ### Responsibilities ,
