@@ -28,7 +28,7 @@ def gpt_function(skills, experience, job_role):
     ]
 
     response = openai.ChatCompletion.create(
-        engine="gpt-4",
+        engine="gpt-4o",
         messages=conversation,
         temperature=0
     )
@@ -43,7 +43,7 @@ def main():
     """
     st.markdown(description, unsafe_allow_html=True)
 
-    st.sidebar.title("Azure OpenAI API Key and Endpoint")
+    st.sidebar.title("OpenAI API Key")
     api_key = st.sidebar.text_input("Enter your Azure OpenAI API Key", type="password")
     openai.api_key = api_key
 
