@@ -1,5 +1,5 @@
 import streamlit as st
-import openai
+import openai import OpenAI
 
 def gpt_function(skills, experience, job_role):
     user_content = f"""
