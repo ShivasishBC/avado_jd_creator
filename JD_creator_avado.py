@@ -27,7 +27,7 @@ def gpt_function(skills, experience, job_role):
         {"role": "user", "content": user_content}
     ]
 
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model="gpt-4o",
         messages=conversation,
         temperature=0
