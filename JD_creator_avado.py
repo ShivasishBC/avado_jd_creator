@@ -44,8 +44,8 @@ def main():
     """
     st.markdown(description , unsafe_allow_html=True)
 
-    st.sidebar.title("Azure OpenAI API Key and Endpoint")
-    api_key = st.sidebar.text_input("Enter your Azure OpenAI API Key", type="password")
+    st.sidebar.title("OpenAI API Key")
+    api_key = st.sidebar.text_input("Enter your OpenAI API Key", type="password")
     client = OpenAI(api_key=api_key)
 
     input_list = ["Any Specific Required Skills","Experience Level","Job Title"]
