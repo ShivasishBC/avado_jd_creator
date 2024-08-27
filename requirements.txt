@@ -1,6 +1,10 @@
-openai==1.42.0
-python-dotenv
 streamlit
-
-fastapi
-uvicorn
+PyPDF2
+anthropic
+requests
+bs4
+fuzzywuzzy
+python-dotenv
+openai
+docx2txt
+pypdf
