@@ -1,5 +1,5 @@
 import streamlit as st
-from openai import OpenAI
+import openai
 
 def gpt_function(skills, experience, job_role):
     user_content = f"""
@@ -27,8 +27,8 @@ def gpt_function(skills, experience, job_role):
         {"role": "user", "content": user_content}
     ]
 
-    response = openai.chat.completions.create(
-        model="gpt-4o",
+    response = openai.ChatCompletion.create(
+        engine="gpt-4",
         messages=conversation,
         temperature=0
     )
