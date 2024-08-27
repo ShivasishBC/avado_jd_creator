@@ -1,12 +1,7 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 
-def get_openai_client(api_key, endpoint):
-    openai.api_type = 'azure'
-    openai.api_key = api_key
-    openai.api_version = '2023-12-01-preview'
-    openai.api_base = endpoint
-    return openai
+
 
 def gpt_function(client, skills, experience, job_role):
     user_content = f"""
@@ -33,9 +28,9 @@ def gpt_function(client, skills, experience, job_role):
                                     """},
                      {"role": "user", "content": f"{user_content}"}]
 
-    response = client.ChatCompletion.create(
+    response = client.chat.completions.create(
         messages=conversation,
-        engine="gpt-35-turbo",
+        model="gpt-4o",
         temperature=0
     )
     text_response = response.choices[0].message.content
@@ -50,9 +45,8 @@ def main():
     st.markdown(description , unsafe_allow_html=True)
 
     st.sidebar.title("Azure OpenAI API Key and Endpoint")
-    openai_api_key = st.sidebar.text_input("Enter your Azure OpenAI API Key", type="password")
-    openai_endpoint = 'https://bc-api-management-uksouth.azure-api.net'
-    client = get_openai_client(openai_api_key,openai_endpoint)
+    api_key = st.sidebar.text_input("Enter your Azure OpenAI API Key", type="password")
+    client = OpenAI(api_key=api_key)
 
     input_list = ["Any Specific Required Skills","Experience Level","Job Title"]
 
@@ -64,7 +58,7 @@ def main():
         skills = "None"
     
 
-    if experience and job_role and openai_api_key and openai_endpoint:
+    if experience and job_role and api_key:
         if st.button("Submit"):
             with st.spinner("Saving you time ...."):
                 output = gpt_function(client, skills, experience, job_role)
